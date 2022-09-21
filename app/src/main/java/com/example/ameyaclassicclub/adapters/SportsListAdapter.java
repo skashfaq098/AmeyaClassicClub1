@@ -15,7 +15,9 @@ import com.example.ameyaclassicclub.EventRegisteration;
 import com.example.ameyaclassicclub.HomeActivity;
 import com.example.ameyaclassicclub.R;
 import com.example.ameyaclassicclub.SportListActivity;
+import com.example.ameyaclassicclub.config.ProjectConstants;
 import com.example.ameyaclassicclub.model.sports.SportsRegisterationModel;
+import com.example.ameyaclassicclub.utils.ProjectSharedPreference;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -30,6 +32,8 @@ import java.util.ArrayList;
 // database contents in a Recycler View
 public class SportsListAdapter extends FirebaseRecyclerAdapter<
         SportsRegisterationModel, SportsListAdapter.sportsViewholder> {
+    String memberOrStaff="";
+
 
     public SportsListAdapter(
             @NonNull FirebaseRecyclerOptions<SportsRegisterationModel> options)
@@ -45,6 +49,11 @@ public class SportsListAdapter extends FirebaseRecyclerAdapter<
         // Add firstname from model class (here
         // "person.class")to appropriate view in Card
         // view (here "person.xml")
+        if(memberOrStaff!=null){
+            if(memberOrStaff.equals(ProjectConstants.STAFF_STRING)||memberOrStaff.equals(ProjectConstants.ADMIN_STRING)){
+                holder.registerSports.setVisibility(View.GONE);
+            }
+        }
         holder.sportsName.setText(model.getSportsName());
         holder.coachingFees.setText(model.getSportsCoachingFees());
         holder.daysInAWeek.setText(model.getSportsDaysInAweek());
@@ -95,6 +104,9 @@ public class SportsListAdapter extends FirebaseRecyclerAdapter<
         public sportsViewholder(@NonNull View itemView)
         {
             super(itemView);
+            memberOrStaff= ProjectSharedPreference.getInstance(itemView.getContext()).fetchStringPreference(ProjectConstants.MEMBER_OR_STAFF,null);
+
+
 
             sportsName
                     = itemView.findViewById(R.id.ItemSportsTimeSlot);

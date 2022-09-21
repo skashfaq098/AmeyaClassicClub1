@@ -16,23 +16,22 @@ class AuthenticationProcessingActivity : AppCompatActivity() {
         initView()
     }
     private fun initView(){
-        var loginDetails = Gson().fromJson(ProjectSharedPreference.getInstance(this@AuthenticationProcessingActivity).fetchStringPreference(
-                ProjectConstants.EXTRAS_LOGIN_DETAILS, null), MemberRegisterationModel::class.java)
-        println("ExtrasLoginDetails"+loginDetails)
-        if(loginDetails!=null){
-            if (loginDetails.role == "member") {
+
+        var memberOrStaff=ProjectSharedPreference.getInstance(this@AuthenticationProcessingActivity).fetchStringPreference(ProjectConstants.MEMBER_OR_STAFF,null)
+        if(memberOrStaff!=null){
+            if (memberOrStaff == "member") {
                 Toast.makeText(this@AuthenticationProcessingActivity, "Login Successful", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this@AuthenticationProcessingActivity, HomeActivity::class.java)
                 startActivity(intent)
                 finish()
             }
-            if (loginDetails.role == "staff") {
+            if (memberOrStaff == "staff") {
                 Toast.makeText(this@AuthenticationProcessingActivity, "Login Successful", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this@AuthenticationProcessingActivity, StaffHomeActivity::class.java)
                 startActivity(intent)
                 finish()
             }
-            if (loginDetails.role == "admin") {
+            if (memberOrStaff == "admin") {
                 Toast.makeText(this@AuthenticationProcessingActivity, "Login Successful", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this@AuthenticationProcessingActivity, AdminHomeActivity::class.java)
                 startActivity(intent)

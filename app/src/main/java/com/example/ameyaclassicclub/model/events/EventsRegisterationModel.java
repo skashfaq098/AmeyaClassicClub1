@@ -2,15 +2,14 @@ package com.example.ameyaclassicclub.model.events;
 
 
 public class EventsRegisterationModel {
-    public String eventName, eventId, eventGuest,eventDate,eventFees;
+    public String eventName, eventId,eventDate,eventFees;
 
     public EventsRegisterationModel(){
     }
-    public EventsRegisterationModel(String eventName, String eventId, String eventGuest,String eventDate,String eventFees) {
+    public EventsRegisterationModel(String eventName, String eventId,String eventDate,String eventFees) {
         this.eventName = eventName;
         this.eventFees = eventFees;
         this.eventId = eventId;
-        this.eventGuest=eventGuest;
         this.eventDate=eventDate;
     }
 
@@ -22,9 +21,6 @@ public class EventsRegisterationModel {
         return eventFees;
     }
 
-    public String getEventGuest() {
-        return eventGuest;
-    }
 
     public String getEventId() {
         return eventId;
@@ -40,10 +36,6 @@ public class EventsRegisterationModel {
 
     public void setEventFees(String eventFees) {
         this.eventFees = eventFees;
-    }
-
-    public void setEventGuest(String eventGuest) {
-        this.eventGuest = eventGuest;
     }
 
     public void setEventId(String eventId) {

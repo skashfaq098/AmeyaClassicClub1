@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 
 import com.example.ameyaclassicclub.adapters.RegisteredEventsAdapter;
+import com.example.ameyaclassicclub.config.ProjectConstants;
 import com.example.ameyaclassicclub.model.events.EventsRegisterationModel;
+import com.example.ameyaclassicclub.model.events.MemberRegisteredForEventModel;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -30,7 +32,7 @@ public class ViewRegisteredEvents extends AppCompatActivity {
         // Create a instance of the database and get
         // its reference
         mbase
-                = FirebaseDatabase.getInstance().getReference("UserData").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("registeredEvents");
+                = FirebaseDatabase.getInstance().getReference("UserData").child(ProjectConstants.MEMBER_STRING).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("registeredEvents");
 
         recyclerView = findViewById(R.id.recycler4);
 
@@ -40,9 +42,9 @@ public class ViewRegisteredEvents extends AppCompatActivity {
 
         // It is a class provide by the FirebaseUI to make a
         // query in the database to fetch appropriate data
-        FirebaseRecyclerOptions<EventsRegisterationModel> options
-                = new FirebaseRecyclerOptions.Builder<EventsRegisterationModel>()
-                .setQuery(mbase, EventsRegisterationModel.class)
+        FirebaseRecyclerOptions<MemberRegisteredForEventModel> options
+                = new FirebaseRecyclerOptions.Builder<MemberRegisteredForEventModel>()
+                .setQuery(mbase, MemberRegisteredForEventModel.class)
                 .build();
         // Connecting object of required Adapter class to
         // the Adapter class itself

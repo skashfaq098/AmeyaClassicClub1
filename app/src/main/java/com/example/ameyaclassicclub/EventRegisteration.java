@@ -24,13 +24,13 @@ import java.util.Map;
 
 public class EventRegisteration extends AppCompatActivity {
 
-    private EditText edit_txt_eventName, edit_txt_eventId, edit_txt_eventGuest,edit_txt_eventDate,edit_txt_eventFees;
+    private EditText edit_txt_eventName, edit_txt_eventId,edit_txt_eventDate,edit_txt_eventFees;
     private TextView event_registeration_btn;
     ProgressBar signUp_progress;
     private DatabaseReference databaseReference;
     private FirebaseDatabase firebaseDatabase;
     private FirebaseAuth mAuth;
-    String eventName, eventId, eventGuest,eventDate,eventFees;
+    String eventName, eventId,eventDate,eventFees;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +38,6 @@ public class EventRegisteration extends AppCompatActivity {
         signUp_progress = findViewById(R.id.event_signUp_progress);
         edit_txt_eventName = findViewById(R.id.eventName);
         edit_txt_eventId = findViewById(R.id.eventId);
-        edit_txt_eventGuest = findViewById(R.id.eventGuest);
         edit_txt_eventDate = findViewById(R.id.eventDate);
         edit_txt_eventFees = findViewById(R.id.eventFees);
 
@@ -54,12 +53,11 @@ public class EventRegisteration extends AppCompatActivity {
             public void onClick(View v) {
                 eventName = edit_txt_eventName.getText().toString().trim();
                 eventId = edit_txt_eventId.getText().toString().trim();
-                eventGuest = edit_txt_eventGuest.getText().toString().trim();
                 eventDate = edit_txt_eventDate.getText().toString().trim();
                 eventFees = edit_txt_eventFees.getText().toString().trim();
 
 
-                EventsRegisterationModel data = new EventsRegisterationModel(eventName, eventId, eventGuest,eventDate,eventFees);
+                EventsRegisterationModel data = new EventsRegisterationModel(eventName, eventId,eventDate,eventFees);
                 FirebaseDatabase.getInstance().getReference("Events").child(eventId)
                         .setValue(data).
                         addOnCompleteListener(new OnCompleteListener<Void>() {

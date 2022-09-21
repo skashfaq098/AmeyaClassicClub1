@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.ameyaclassicclub.config.ProjectConstants;
 import com.example.ameyaclassicclub.model.member.MemberRegisterationModel;
+import com.example.ameyaclassicclub.model.staff.StaffRegisterationModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -29,7 +30,7 @@ import java.util.Map;
 
 public class StaffRegisterationActivity extends AppCompatActivity {
 
-    private EditText edit_txt_firstName, edit_txt_userName, edit_txt_mobile,edit_txt_email,edit_txt_Designation, edit_txt_pass, edit_txt_coPass;
+    private EditText edit_txt_firstName, edit_txt_userName,edit_txt_staffId ,edit_txt_mobile,edit_txt_email,edit_txt_Designation, edit_txt_pass, edit_txt_coPass;
     private RadioButton radioMale, radioFemale;
     private Button staff_button_register;
     ProgressBar signUp_progress;
@@ -37,7 +38,7 @@ public class StaffRegisterationActivity extends AppCompatActivity {
     private FirebaseDatabase firebaseDatabase;
     private FirebaseAuth mAuth;
     private String memberOrStaff;
-    String stafffirstName, staffuserName, staffemail,staffmobile,staffDesignation, staffpassword, staffco_password;
+    String stafffirstName, staffuserName, staffId,staffemail,staffmobile,staffDesignation, staffpassword, staffco_password;
     String gender = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,7 @@ public class StaffRegisterationActivity extends AppCompatActivity {
         edit_txt_coPass = findViewById(R.id.staffCoPass);
         edit_txt_Designation = findViewById(R.id.staffDesignation);
         edit_txt_mobile = findViewById(R.id.staffMobile);
+        edit_txt_staffId = findViewById(R.id.staffId);
 
         radioMale = findViewById(R.id.staffRadioMale);
         radioFemale = findViewById(R.id.staffRadioFemale);
@@ -65,7 +67,7 @@ public class StaffRegisterationActivity extends AppCompatActivity {
         staff_button_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!validatefirstName() | !validateuserName() | !validateEmail() | !validateMobile()|!validateDesignation()|!validatePassword() | checkUserGender()) {
+                if (!validatefirstName() | !validateuserName()|!validatestaffID() | !validateEmail() | !validateMobile()|!validateDesignation()|!validatePassword() | checkUserGender()) {
                     return;
                 }
                 if (staffpassword.equals(staffco_password)) {
@@ -77,9 +79,9 @@ public class StaffRegisterationActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
-                                        MemberRegisterationModel data = new MemberRegisterationModel(stafffirstName,staffuserName,staffmobile,staffemail,staffDesignation,gender,"staff",null);
+                                        StaffRegisterationModel data = new StaffRegisterationModel(stafffirstName,staffuserName,staffId,staffDesignation,staffmobile,staffemail,gender,ProjectConstants.STAFF_STRING,null);
 //                                        Map<String, MemberRegisterationModel> users = new HashMap<>();
-                                        FirebaseDatabase.getInstance().getReference("UserData").child(task.getResult().getUser().getUid()).setValue(data).
+                                        FirebaseDatabase.getInstance().getReference("UserData").child(ProjectConstants.STAFF_STRING).child(task.getResult().getUser().getUid()).setValue(data).
                                                 addOnCompleteListener(new OnCompleteListener<Void>() {
                                                     @Override
                                                     public void onComplete(@NonNull Task<Void> task) {
@@ -115,6 +117,15 @@ public class StaffRegisterationActivity extends AppCompatActivity {
         staffuserName = edit_txt_userName.getText().toString().trim();
         if (TextUtils.isEmpty(staffuserName)) {
             Toast.makeText(StaffRegisterationActivity.this, "Enter Your User Name", Toast.LENGTH_SHORT).show();
+            return false;
+        } else {
+            return true;
+        }
+    }
+    private boolean validatestaffID() {
+        staffId = edit_txt_staffId.getText().toString().trim();
+        if (TextUtils.isEmpty(staffId)) {
+            Toast.makeText(StaffRegisterationActivity.this, "Enter Staff Id", Toast.LENGTH_SHORT).show();
             return false;
         } else {
             return true;

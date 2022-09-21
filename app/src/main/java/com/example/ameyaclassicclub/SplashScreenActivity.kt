@@ -29,9 +29,6 @@ class SplashScreenActivity : AppCompatActivity() {
             goToNext()
         }, 3000)
 
-
-
-
     }
     private fun goToNext() {
         val intent = Intent(SplashScreenActivity@ this, AuthenticationProcessingActivity::class.java)

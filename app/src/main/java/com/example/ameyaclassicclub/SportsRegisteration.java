@@ -17,6 +17,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ameyaclassicclub.config.ProjectConstants;
 import com.example.ameyaclassicclub.model.member.MemberRegisterationModel;
 import com.example.ameyaclassicclub.model.sports.SportsRegisterationModel;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -35,13 +36,13 @@ import java.util.concurrent.TimeUnit;
 
 public class SportsRegisteration extends AppCompatActivity {
 
-    private EditText edit_txt_sportsName, edit_txt_sportsId, edit_txt_sportsTimeSlot,edit_txt_sportsDaysInAweek,edit_txt_sportsCoachingFees,edit_txt_assignStaffEmail;
+    private EditText edit_txt_sportsName, edit_txt_sportsId, edit_txt_sportsTimeSlot,edit_txt_sportsDaysInAweek,edit_txt_sportsCoachingFees,edit_txt_assignStaffId;
     private TextView sports_registeration_btn;
     ProgressBar signUp_progress;
     private DatabaseReference databaseReference;
     private FirebaseDatabase firebaseDatabase;
     private FirebaseAuth mAuth;
-    String sportsName, sportsId, sportsTimeSlot,sportsDaysInAweek,sportsCoachingFees,assignStaffEmail;
+    String sportsName, sportsId, sportsTimeSlot,sportsDaysInAweek,sportsCoachingFees,assignStaffId;
     public String staffKey;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +54,7 @@ public class SportsRegisteration extends AppCompatActivity {
         edit_txt_sportsTimeSlot = findViewById(R.id.sportsTimeSlot);
         edit_txt_sportsDaysInAweek = findViewById(R.id.sportsDaysInAweek);
         edit_txt_sportsCoachingFees = findViewById(R.id.sportsCoachingFees);
-        edit_txt_assignStaffEmail = findViewById(R.id.assignStaffEmail);
+        edit_txt_assignStaffId = findViewById(R.id.assignStaffId);
 
 
         sports_registeration_btn = findViewById(R.id.sportsRegisteraionBtn);
@@ -70,7 +71,7 @@ public class SportsRegisteration extends AppCompatActivity {
                 sportsTimeSlot = edit_txt_sportsTimeSlot.getText().toString().trim();
                 sportsDaysInAweek = edit_txt_sportsDaysInAweek.getText().toString().trim();
                 sportsCoachingFees = edit_txt_sportsCoachingFees.getText().toString().trim();
-                assignStaffEmail = edit_txt_assignStaffEmail.getText().toString().trim();
+                assignStaffId = edit_txt_assignStaffId.getText().toString().trim();
 
 
                 SportsRegisterationModel data = new SportsRegisterationModel(sportsName, sportsId, sportsTimeSlot,sportsDaysInAweek,sportsCoachingFees);
@@ -81,12 +82,12 @@ public class SportsRegisteration extends AppCompatActivity {
                         addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-                                FirebaseDatabase.getInstance().getReference("UserData").addValueEventListener(new ValueEventListener() {
+                                FirebaseDatabase.getInstance().getReference("UserData").child(ProjectConstants.STAFF_STRING).addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                                         for (DataSnapshot ds: snapshot.getChildren()){
-                                            if(ds.child("emailId").getValue(true).toString().equals(assignStaffEmail)){
+                                            if(ds.child("staffId").getValue(true).toString().equals(assignStaffId)){
                                                 System.out.println("AssignedSportsMemberKey"+ds.getKey().toString());
                                                 staffKey=ds.getKey().toString();
                                                 System.out.println("staffKeyValue"+staffKey);
@@ -115,7 +116,7 @@ System.out.println(staffKey+"staffKeyValue");
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        FirebaseDatabase.getInstance().getReference("UserData").child(staffKey).child("assignedSports").push().setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        FirebaseDatabase.getInstance().getReference("UserData").child(ProjectConstants.STAFF_STRING).child(staffKey).child("assignedSports").push().setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 //    progressbar GONE
@@ -125,7 +126,7 @@ System.out.println(staffKey+"staffKeyValue");
                         });
                         //Do something after 100ms
                     }
-                }, 3000);
+                }, 2000);
 
             }
 

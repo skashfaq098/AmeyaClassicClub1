@@ -35,6 +35,9 @@ public class StaffHomeActivity extends AppCompatActivity {
     }
     public void onSportsViewStaffClick(View view) {
 
+        Toast.makeText(StaffHomeActivity.this, "Logout Successful ", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(StaffHomeActivity.this, StaffAssignedSportsActivity.class);
+        startActivity(intent);
     }
     public void onEventsViewStaffClick(View view) {
 

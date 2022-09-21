@@ -2,10 +2,13 @@ package com.example.ameyaclassicclub.adapters;
 
 
 import android.content.Intent;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,8 +19,11 @@ import com.example.ameyaclassicclub.EventRegisteration;
 import com.example.ameyaclassicclub.HomeActivity;
 import com.example.ameyaclassicclub.R;
 import com.example.ameyaclassicclub.SportListActivity;
+import com.example.ameyaclassicclub.config.ProjectConstants;
 import com.example.ameyaclassicclub.model.events.EventsRegisterationModel;
+import com.example.ameyaclassicclub.model.events.MemberRegisteredForEventModel;
 import com.example.ameyaclassicclub.model.sports.SportsRegisterationModel;
+import com.example.ameyaclassicclub.utils.ProjectSharedPreference;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -32,6 +38,8 @@ import java.util.ArrayList;
 // database contents in a Recycler View
 public class EventsListAdapter extends FirebaseRecyclerAdapter<
         EventsRegisterationModel, EventsListAdapter.eventsViewholder> {
+    int eventGuest=0;
+
 
     public EventsListAdapter(
             @NonNull FirebaseRecyclerOptions<EventsRegisterationModel> options)
@@ -50,14 +58,37 @@ public class EventsListAdapter extends FirebaseRecyclerAdapter<
         holder.eventName.setText(model.getEventName());
         holder.eventDate.setText(model.getEventDate());
         holder.eventFees.setText(model.getEventFees());
-        holder.eventGuest.setText(model.getEventGuest());
+        holder.editText_eventGuest.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                try{
+                    eventGuest=Integer.parseInt(s.toString());
+                } catch(NumberFormatException ex){
+                    eventGuest=0;// handle your exception
+                }
+                holder.eventTotalFees.setText(Integer.toString(eventGuest*Integer.parseInt(model.getEventFees())));
+
+            }
+        });
         holder.registerEvents.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                ArrayList<String> registerSportsID=new ArrayList<String>();
 //                registerSportsID.add(model.sportsId);
-                FirebaseDatabase.getInstance().getReference("UserData")
-                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("registeredEvents").push().setValue(model).addOnCompleteListener(new OnCompleteListener<Void>() {
+                MemberRegisteredForEventModel mbrRegisteration=new MemberRegisteredForEventModel(model.eventName, model.eventId,String.valueOf(eventGuest), model.eventDate, model.eventFees);
+
+                FirebaseDatabase.getInstance().getReference("UserData").child(ProjectConstants.MEMBER_STRING)
+                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("registeredEvents").push().setValue(mbrRegisteration).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 //    progressbar GONE
@@ -88,12 +119,15 @@ public class EventsListAdapter extends FirebaseRecyclerAdapter<
         View view
                 = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.events_list_item, parent, false);
+
         return new EventsListAdapter.eventsViewholder(view);
     }
     class eventsViewholder
             extends RecyclerView.ViewHolder {
-        TextView eventName, eventDate, eventGuest,eventFees;
+        TextView eventName, eventDate,eventFees,eventTotalFees;
         Button registerEvents;
+        EditText editText_eventGuest=itemView.findViewById(R.id.eventGuest);
+
         public eventsViewholder(@NonNull View itemView)
         {
             super(itemView);
@@ -101,10 +135,18 @@ public class EventsListAdapter extends FirebaseRecyclerAdapter<
             eventName
                     = itemView.findViewById(R.id.ItemEventsName);
             eventDate = itemView.findViewById(R.id.ItemEventsDate);
-            eventGuest = itemView.findViewById(R.id.ItemEventsGuest);
             eventFees = itemView.findViewById(R.id.ItemEventsFees);
             registerEvents = itemView.findViewById(R.id.registerEvents);
+            eventTotalFees = itemView.findViewById(R.id.ItemEventsTotalFees);
 
+
+            //eventGuest=editText_eventGuest.getText().toString();
+            String memberOrStaff=ProjectSharedPreference.getInstance(itemView.getContext()).fetchStringPreference(ProjectConstants.MEMBER_OR_STAFF,null);
+            if (memberOrStaff.equals(ProjectConstants.STAFF_STRING) || memberOrStaff.equals(ProjectConstants.ADMIN_STRING)){
+                registerEvents.setVisibility(View.GONE);
+                editText_eventGuest.setVisibility(View.GONE);
+
+            }
 
         }
     }

@@ -63,6 +63,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <EditText
+                android:id="@+id/staffId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Staff Id"
+                android:textSize="16sp"
+                android:inputType="textWebEmailAddress" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
                 android:id="@+id/staffMobile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

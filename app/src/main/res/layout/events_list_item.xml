@@ -64,37 +64,6 @@
                 android:layout_weight="30"
                 android:lines="1"
                 android:padding="10dp"
-                android:text="Events Guest"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <TextView
-
-                android:id="@+id/ItemEventsGuest"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="70"
-                android:padding="10dp"
-                android:text="Time"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                android:textStyle="normal" />
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:orientation="horizontal"
-            android:weightSum="100">
-
-            <TextView
-                android:layout_width="42dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="30"
-                android:lines="1"
-                android:padding="10dp"
                 android:text="Events Date"
                 android:textColor="@color/black"
                 android:textSize="14sp"
@@ -144,6 +113,50 @@
                 android:textStyle="normal" />
 
         </LinearLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <EditText
+                android:id="@+id/eventGuest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Number of Guest"
+                android:textSize="16sp"
+                android:inputType="number" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal"
+            android:weightSum="100">
+
+            <TextView
+                android:layout_width="42dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="30"
+                android:lines="1"
+                android:padding="10dp"
+                android:text="Total Fees"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+
+                android:id="@+id/ItemEventsTotalFees"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="70"
+                android:padding="10dp"
+                android:text="0"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="normal" />
+
+        </LinearLayout>
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

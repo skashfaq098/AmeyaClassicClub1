@@ -16,6 +16,7 @@ import com.example.ameyaclassicclub.HomeActivity;
 import com.example.ameyaclassicclub.R;
 import com.example.ameyaclassicclub.SportListActivity;
 import com.example.ameyaclassicclub.model.events.EventsRegisterationModel;
+import com.example.ameyaclassicclub.model.events.MemberRegisteredForEventModel;
 import com.example.ameyaclassicclub.model.sports.SportsRegisterationModel;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -30,17 +31,17 @@ import java.util.ArrayList;
 // FirebaseUI. it provides functions to bind, adapt and show
 // database contents in a Recycler View
 public class RegisteredEventsAdapter extends FirebaseRecyclerAdapter<
-        EventsRegisterationModel, RegisteredEventsAdapter.registeredEventsViewholder> {
+        MemberRegisteredForEventModel, RegisteredEventsAdapter.registeredEventsViewholder> {
 
     public RegisteredEventsAdapter(
-            @NonNull FirebaseRecyclerOptions<EventsRegisterationModel> options)
+            @NonNull FirebaseRecyclerOptions<MemberRegisteredForEventModel> options)
     {
         super(options);
     }
     @Override
     protected void
     onBindViewHolder(@NonNull registeredEventsViewholder holder,
-                     int position, @NonNull EventsRegisterationModel model)
+                     int position, @NonNull MemberRegisteredForEventModel model)
     {
 
         // Add firstname from model class (here

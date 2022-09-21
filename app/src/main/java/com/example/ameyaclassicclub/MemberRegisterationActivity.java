@@ -90,10 +90,10 @@ public class MemberRegisterationActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
-                                        MemberRegisterationModel data = new MemberRegisterationModel(firstName,userName,mobile,email,memberDuration,gender,memberOrStaff,null);
+                                        MemberRegisterationModel data = new MemberRegisterationModel(firstName,userName,mobile,email,memberDuration,gender,memberOrStaff,null,null);
 //                                        Map<String, MemberRegisterationModel> users = new HashMap<>();
 //                                        users.put(email,data);
-                                        FirebaseDatabase.getInstance().getReference("UserData")
+                                        FirebaseDatabase.getInstance().getReference("UserData").child(ProjectConstants.MEMBER_STRING)
                                                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(data).
                                                 addOnCompleteListener(new OnCompleteListener<Void>() {
                                                     @Override

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "79846741297",
+    "project_id": "ameya-classic-club-b8b11",
+    "storage_bucket": "ameya-classic-club-b8b11.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:79846741297:android:6e027d1f53315caaf60c10",
+        "android_client_info": {
+          "package_name": "com.example.ameyaclassicclub"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "79846741297-qf13r0b5bppl4h7d247mdkdou6tkftst.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAk13YzixFFPpVn-g3qQuBAL_BlJ-UV8cs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "79846741297-qf13r0b5bppl4h7d247mdkdou6tkftst.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
